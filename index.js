@@ -32,6 +32,18 @@ server.on('request', (req, resp) => {
     return quotesResponse(resp);
   }
 
+  if(req.url === '/normal') {
+    return normalResponse(resp);
+  }
+
+  if(req.url === '/bigger-content-length') {
+    return biggerContentLengthResponse(resp);
+  }
+
+  if(req.url === '/smaller-content-length') {
+    return smallerContentLengthResponse(resp);
+  }
+
   resp.end('#yolo');
 });
 
@@ -112,6 +124,27 @@ function quotesResponse(resp) {
   resp.write('</head>\n');
   resp.write('</html>\n');
   resp.end();
+}
+
+function normalResponse(resp) {
+  resp.writeHead(200);
+  resp.write('<!DOCTYPE html>\n');
+  resp.write('<html>\n');
+  resp.write('<head>\n');
+  resp.write('<title>#yolo</title>\n');
+  resp.write('</head>\n');
+  resp.write('</html>\n');
+  resp.end();
+}
+
+function biggerContentLengthResponse(resp) {
+  resp.setHeader('Content-Length', '10000000000');
+  normalResponse(resp);
+}
+
+function smallerContentLengthResponse(resp) {
+  resp.setHeader('Content-Length', '13');
+  normalResponse(resp);
 }
 
 server.listen(process.env.PORT || 80);
