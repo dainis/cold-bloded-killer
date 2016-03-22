@@ -28,6 +28,10 @@ server.on('request', (req, resp) => {
     return singleTitle(resp);
   }
 
+  if(req.url === '/quotes') {
+    return quotesResponse(resp);
+  }
+
   resp.end('#yolo');
 });
 
@@ -77,7 +81,7 @@ function binaryResponse(resp) {
 
 function multiResponse(resp) {
   resp.writeHead(200);
-  resp.write('<!doctype html>\n');
+  resp.write('<!DOCTYPE html>\n');
   resp.write('<html>\n');
   resp.write('<head>\n');
   for(var i = 0; i < 10; i++) {
@@ -90,10 +94,21 @@ function multiResponse(resp) {
 
 function singleTitle(resp) {
   resp.writeHead(200);
-  resp.write('<!doctype html>\n');
+  resp.write('<!DOCTYPE html>\n');
   resp.write('<html>\n');
   resp.write('<head>\n');
   resp.write('<title>' + (new Array(512).join('\t\t\t\t\t\t\t\t\t\n\n\n\n\n\n\n\n\n\n#yolo\t\t\t\t\t\t\t\t\t\n\n\n\n\n\n\n\n\n\n')) + '</title>\n');
+  resp.write('</head>\n');
+  resp.write('</html>\n');
+  resp.end();
+}
+
+function quotesResponse(resp) {
+  resp.writeHead(200);
+  resp.write('<!DOCTYPE html>\n');
+  resp.write('<html>\n');
+  resp.write('<head>\n');
+  resp.write('<title>' + (new Array(512).join('"')) + '</title>\n');
   resp.write('</head>\n');
   resp.write('</html>\n');
   resp.end();
