@@ -40,14 +40,14 @@ function slowResponse(resp) {
 
   let cnt = 0,
     interval = setInterval(() => {
-    resp.write(':O');
-    cnt += 1;
+      resp.write(':O');
+      cnt += 1;
 
-    if(cnt > 1000) {
-      resp.end();
-      clearInterval(interval);
-    }
-  }, 2500);
+      if(cnt > 1000) {
+        resp.end();
+        clearInterval(interval);
+      }
+    }, 2500);
 }
 
 function loopResponse(resp) {
