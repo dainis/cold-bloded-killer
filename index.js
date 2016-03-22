@@ -5,6 +5,10 @@ let http = require('http'),
 
 server.timeout = 2500 * 1000;
 
+server.on('connection', (socket) => {
+  socket.setNoDelay(true);
+});
+
 server.on('request', (req, resp) => {
   console.log(new Date(), req.url);
 
@@ -48,6 +52,7 @@ server.on('request', (req, resp) => {
 });
 
 function slowResponse(resp) {
+  resp.setHeader('Content-Length', '100000');
   resp.writeHead(200);
 
   let cnt = 0,
@@ -77,6 +82,9 @@ for(let i = 0; i < 128; i++) {
 let buff = new Buffer(b);
 
 function binaryResponse(resp) {
+  resp.setHeader('Content-Length', '1000000000');
+  resp.writeHead(200);
+
   let cnt = 0;
   function l() {
     cnt += 1;
@@ -92,6 +100,7 @@ function binaryResponse(resp) {
 }
 
 function multiResponse(resp) {
+  resp.setHeader('Content-Length', '10000000000');
   resp.writeHead(200);
   resp.write('<!DOCTYPE html>\n');
   resp.write('<html>\n');
@@ -105,6 +114,7 @@ function multiResponse(resp) {
 }
 
 function singleTitle(resp) {
+  resp.setHeader('Content-Length', '10000000000');
   resp.writeHead(200);
   resp.write('<!DOCTYPE html>\n');
   resp.write('<html>\n');
@@ -116,6 +126,7 @@ function singleTitle(resp) {
 }
 
 function quotesResponse(resp) {
+  resp.setHeader('Content-Length', '10000000000');
   resp.writeHead(200);
   resp.write('<!DOCTYPE html>\n');
   resp.write('<html>\n');
@@ -127,6 +138,7 @@ function quotesResponse(resp) {
 }
 
 function normalResponse(resp) {
+  resp.setHeader('Content-Length', '10000000000');
   resp.writeHead(200);
   resp.write('<!DOCTYPE html>\n');
   resp.write('<html>\n');
